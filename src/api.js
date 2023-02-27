@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { archive } from "./utils/arseed.js";
+import { archive, archiveMedia } from "./utils/arseed.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -22,6 +22,26 @@ app.use((err, req, res, next) => {
 });
 
 app.post("/arseed", async (req, res) => {
+  try {
+    console.log(req?.body);
+    const arseedTx = await archive(JSON.stringify(req?.body));
+    if (!arseedTx) {
+      res.json({ status: "error" });
+      return;
+    }
+    res.json({
+      status: "ok",
+      bytesSize: Number(req.headers["content-length"]),
+      txid: arseedTx,
+    });
+    return;
+  } catch (error) {
+    res.json({ status: "error" });
+    return;
+  }
+});
+
+app.post("/arseed-media", async (req, res) => {
   try {
     console.log(req?.body);
     const arseedTx = await archive(JSON.stringify(req?.body));
