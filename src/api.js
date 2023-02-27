@@ -44,7 +44,7 @@ app.post("/arseed", async (req, res) => {
 app.post("/arseed-media", async (req, res) => {
   try {
     console.log(req?.body);
-    const arseedTx = await archive(JSON.stringify(req?.body));
+    const arseedTx = await archiveMedia(JSON.stringify(req?.body));
     if (!arseedTx) {
       res.json({ status: "error" });
       return;
