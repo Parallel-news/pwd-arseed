@@ -1,6 +1,6 @@
 {
   "name": "pwd-arseed",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "PWD blogs archive proxy",
   "main": "./src/api.js",
