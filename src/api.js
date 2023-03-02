@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
 app.post("/arseed", async (req, res) => {
   try {
     console.log(req?.body);
-    const arseedTx = await archive(JSON.stringify(req?.body));
+    const arseedTx = await archive(req?.body);
     if (!arseedTx) {
       res.json({ status: "error" });
       return;
