@@ -5,12 +5,12 @@ dotenv.config();
 export async function archive(input) {
   try {
     const instance = await genNodeAPI(process.env.PRIVATE_KEY);
-
+    const type = atob(input.mime)
     const arseedUrl = "https://arseed.web3infra.dev";
-    const data = Buffer.from(input);
+    const data = Buffer.from(atob(input.content));
     const payCurrency = "eth";
     const ops = {
-      tags: [{ name: "Content-Type", value: "application/json" }],
+      tags: [{ name: "Content-Type", value: type }],
     };
     const tx = await instance.sendAndPay(arseedUrl, data, payCurrency, ops);
     return tx?.order?.itemId;
@@ -37,7 +37,7 @@ export async function archiveMedia(input) {
     }
     const payCurrency = "eth";
     const ops = {
-      tags: [{ name: "Content-Type", value: (JSON.parse(input))?.mime }],
+      tags: [{ name: "Content-Type", value: atob((JSON.parse(input))?.mime) }],
     };
     const tx = await instance.sendAndPay(
       arseedUrl,
